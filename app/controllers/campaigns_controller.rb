@@ -23,7 +23,6 @@ class CampaignsController < ApplicationController
   # POST /campaigns or /campaigns.json
   def create
     @campaign = Campaign.new(campaign_params)
-
     respond_to do |format|
       if @campaign.save
         format.html { redirect_to campaign_url(@campaign), notice: "Campaign was successfully created." }
@@ -66,6 +65,6 @@ class CampaignsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def campaign_params
-      params.require(:campaign).permit(:name)
+      params.require(:campaign).permit(:name, :user_id, :description)
     end
 end

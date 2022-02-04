@@ -4,12 +4,10 @@ Rails.application.routes.draw do
   
   devise_for :users
 
-  scope :dashboard do
-    get '', to: 'dashboard#index'
-
-    resources :campaigns
+  resources :campaigns
     
-    resources :voters
+  resources :voters, except: [:edit, :update, :delete]
 
-  end
+
+  get 'lider/create', to: 'lider#create'
 end
