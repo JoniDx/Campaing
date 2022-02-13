@@ -1,32 +1,37 @@
-<%= form_with(model: campaign) do |form| %>
-  <% if campaign.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(campaign.errors.count, "error") %> prohibited this campaign from being saved:</h2>
 
-      <ul>
-        <% campaign.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+<div class="card">
+  <div class="card-body">
+    <%= form_with(model: campaign) do |form| %>
+      <% if campaign.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(campaign.errors.count, "error") %> prohibited this campaign from being saved:</h2>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+          <ul>
+            <% campaign.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="field form-group">
+        <%= form.label "Nombre" %>
+        <%= form.text_field :name, class: "form-control"%>
+      </div>
+
+      <div class="field form-group">
+        <%= form.label "Descripción" %>
+        <%= form.text_area :description, class: "form-control" %>
+      </div>
+
+      <div class="field form-group d-none">
+        <%= form.label :user_id %>
+        <%= form.number_field :user_id, value: current_user.id%>
+      </div>
+
+      <div class="actions">
+        <%= form.submit 'Aceptar', :class => 'btn btn-block btn-outline-primary' %>
+      </div>
+    <% end %>
   </div>
-
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description %>
-  </div>
-
-  <div class="field d-none">
-    <%= form.label :user_id %>
-    <%= form.number_field :user_id, value: current_user.id%>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>      

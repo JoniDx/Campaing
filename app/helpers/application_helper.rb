@@ -18,7 +18,7 @@ module ApplicationHelper
                 <div class='collapse navbar-collapse' id='navbarNav'>
                     <ul class='navbar-nav mr-auto my-2 my-lg-0 navbar-nav-scroll'>"
                     enlaces[:"#{rol}"].each { |enlace| nav +=  enlace }   
-        nav += "#{ button_to 'Exit', destroy_user_session_path, method: :delete  }</ul></div></nav>"
+        nav += "</ul><div class=''> #{ button_to 'Exit', destroy_user_session_path, method: :delete, class: "btn btn-outline-danger my-2 my-sm-0" }   </div></div></nav>"
         nav.html_safe
     end
 

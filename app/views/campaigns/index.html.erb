@@ -1,28 +1,25 @@
 <%= nav_dashboard current_user.rol %>
 <p id="notice"><%= notice %></p>
 
-<h1>Campaigns</h1>
+<div class="container">
+  <%= link_to 'Agregar campaña', new_campaign_path, class:"btn btn-block btn-outline-primary mb-5" %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+  <div class="row-grid">
+      <% @campaigns.each do |campaign| %>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title"><%= campaign.name %></h5>
+            <p class="card-text"><%= campaign.description %></p>
+            <div class="">
+              <%= link_to 'Ver', campaign, class:"card-link" %>
+              <%= link_to 'Editar', edit_campaign_path(campaign), class:"card-link" %>
+              <%= link_to 'Borrar', campaign, method: :delete, data: { confirm: 'Are you sure?' }, class:"card-link" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
 
-  <tbody>
-    <% @campaigns.each do |campaign| %>
-      <tr>
-        <td><%= campaign.name %></td>
-        <td><%= link_to 'Show', campaign %></td>
-        <td><%= link_to 'Edit', edit_campaign_path(campaign) %></td>
-        <td><%= link_to 'Destroy', campaign, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  </div>
+  <br>
 
-<br>
-
-<%= link_to 'New Campaign', new_campaign_path %>
+</div>

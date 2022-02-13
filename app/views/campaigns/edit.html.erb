@@ -1,8 +1,12 @@
 <%= nav_dashboard current_user.rol %>
 
-<h1>Editing Campaign</h1>
+<div class="container">
+    <div class="grid-form_titles">
+        <h1>Editar Campaña</h1>
+        <div>
+            <%= link_to 'Mostrar', @campaign %> | <%= link_to 'Regresar', campaigns_path %>
+        </div>
+    </div>
+    <%= render 'form', campaign: @campaign %>
+</div>
 
-<%= render 'form', campaign: @campaign %>
-
-<%= link_to 'Show', @campaign %> |
-<%= link_to 'Back', campaigns_path %>

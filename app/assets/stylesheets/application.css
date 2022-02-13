@@ -15,4 +15,32 @@
  */
 
 
-body{background-color: aquamarine !important;}
+body{background-color: #F8F8FF !important;}
+
+.row-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1rem;
+}
+
+.grid-form_titles{
+    display:grid;
+    grid-template-columns: repeat(2,1fr);
+    position: relative;
+    padding-bottom: 2rem;
+}
+
+.grid-form_titles div{
+    justify-self: end;
+    align-self: center;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+
+@media (max-width: 600px) {
+    .row-grid{
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,7 +1,8 @@
 <%= nav_dashboard current_user.rol %>
-
-<h1>New Campaign</h1>
-
-<%= render 'form', campaign: @campaign %>
-
-<%= link_to 'Back', campaigns_path %>
+<div class="container">
+    <div class="grid-form_titles">
+        <h1>Crear campaña</h1>
+        <%= link_to 'Regresar', campaigns_path%>
+    </div>
+    <%= render 'form', campaign: @campaign %>
+</div>
