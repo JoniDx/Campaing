@@ -1,12 +1,12 @@
 module ApplicationHelper
     def nav_dashboard(rol)
         campaing           = "<li class='nav-item'><a class='nav-link' href='/campaigns'>Campaña</a></li>"
-        lider           = "<li class='nav-item'><a class='nav-link' href='/lider/create'>Lider</a></li>"
+        lider           = "<li class='nav-item'><a class='nav-link' href='/lider/index'>Liders</a></li>"
         votante           = "<li class='nav-item'><a class='nav-link' href='/voters'>Votante</a></li>"
 
         enlaces =  {
-            'administrador': [campaing, lider, votante],
-            'administrador-campaña':  [campaing, lider, votante],
+            'superusuraio': [campaing, lider, votante],
+            'administrador':  [campaing, lider, votante],
             'lider':  [votante],
         }
 

@@ -5,4 +5,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_many :campaings, dependent: :delete_all
 
+  has_many :campaings_user
+  has_many :campaign, through: :campaings_user
 end

@@ -4,27 +4,17 @@
 <div class="container">
     <div class="card">
         <div class="card-body">
-            <%= form_with(model: User.new, id: 'formUser', url: '/user') do |f| %>
-        
-                <div class="d-none">
-                    <div class="form-group">
-                        <%= f.label :rol, 'Rol del usuario' %>
-                        <%= f.text_field :rol, value: 'lider', class: 'form-control' %>
-                    </div>
-                    <div class="form-group">
-                        <%= f.label :create_by, 'Rol del usuario' %>
-                        <%= f.text_field :create_by, value: current_user.id, class: 'form-control' %>
-                    </div>
-                </div>
+            <%= form_with(model: User, id: 'formUser', url: "/user/#{params[:id]}") do |f| %>
+      
 
                 <div class="form-group">
                     <%= f.label :campaign, 'Campaña' %>
-                    <%= select_tag :campaign,  options_from_collection_for_select(Campaign.where(user_id: current_user.id), :id, :name), class: 'form-control' %>
+                    <%= select_tag :campaign,  options_from_collection_for_select(Campaign.where(user_id: current_user.id), :id, :name, @user.campaign[0].id ), class: 'form-control' %>
                 </div>
 
                 <div class="form-group">
                     <%= f.label :email, 'Correo electrónico' %>
-                    <%= f.email_field :email, autocomplete: "email", class: 'form-control' %>
+                    <%= f.email_field :email, autocomplete: "email", class: 'form-control', value: @user.email %>
                 </div>
 
                 <div class="form-group">

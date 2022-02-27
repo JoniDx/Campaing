@@ -24,6 +24,13 @@ gem 'jbuilder', '~> 2.7'
 # gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
+gem 'ransack'
+gem 'money'
+
+gem 'aasm'
+gem 'will_paginate'
+gem 'will_paginate-bootstrap4'
+
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'devise'
 gem 'google_distance_matrix'

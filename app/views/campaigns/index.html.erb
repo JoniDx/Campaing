@@ -18,8 +18,10 @@
           </div>
         </div>
       <% end %>
-
   </div>
+  
+  <%= will_paginate @campaigns, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-center) %>
+
   <br>
 
 </div>

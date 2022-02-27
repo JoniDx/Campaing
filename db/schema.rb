@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_02_084719) do
+ActiveRecord::Schema.define(version: 2022_02_27_020336) do
 
   create_table "campaigns", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -23,6 +23,26 @@ ActiveRecord::Schema.define(version: 2022_02_02_084719) do
     t.index ["user_id"], name: "index_campaigns_on_user_id"
   end
 
+  create_table "campaings_users", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "campaign_id", null: false
+    t.text "rol"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["campaign_id"], name: "index_campaings_users_on_campaign_id"
+    t.index ["user_id"], name: "index_campaings_users_on_user_id"
+  end
+
+  create_table "user_campaings", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "campaign_id", null: false
+    t.text "rol"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["campaign_id"], name: "index_user_campaings_on_campaign_id"
+    t.index ["user_id"], name: "index_user_campaings_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -32,6 +52,7 @@ ActiveRecord::Schema.define(version: 2022_02_02_084719) do
     t.string "rol"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "create_by"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -56,6 +77,10 @@ ActiveRecord::Schema.define(version: 2022_02_02_084719) do
   end
 
   add_foreign_key "campaigns", "users"
+  add_foreign_key "campaings_users", "campaigns"
+  add_foreign_key "campaings_users", "users"
+  add_foreign_key "user_campaings", "campaigns"
+  add_foreign_key "user_campaings", "users"
   add_foreign_key "voters", "campaigns"
   add_foreign_key "voters", "users"
 end

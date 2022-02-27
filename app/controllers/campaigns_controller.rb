@@ -4,7 +4,19 @@ class CampaignsController < ApplicationController
 
   # GET /campaigns or /campaigns.json
   def index
-    @campaigns = Campaign.all
+    if current_user.rol == "superusuario"
+      @campaigns = Campaign.all
+                           .order(created_at: :desc)                       
+                           .paginate(page: params[:page], per_page: 6)
+
+    elsif current_user.rol == 'administrador' 
+      @campaigns = Campaign.where(user_id: current_user.id)
+                           .ransack(name_cont: params[:q])
+                           .result(distinct: true)
+                           .order(created_at: :desc)                       
+                           .paginate(page: params[:page], per_page: 6)
+    end
+    
   end
 
   # GET /campaigns/1 or /campaigns/1.json
