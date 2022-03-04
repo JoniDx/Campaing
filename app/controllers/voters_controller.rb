@@ -23,10 +23,9 @@ class VotersController < ApplicationController
   # POST /voters or /voters.json
   def create
     @voter = Voter.new(voter_params)
-
     respond_to do |format|
       if @voter.save
-        format.html { redirect_to voter_url(@voter), notice: "Voter was successfully created." }
+        format.html { redirect_to voter_url(@voter), notice: "Votador creado." }
         format.json { render :show, status: :created, location: @voter }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -39,7 +38,7 @@ class VotersController < ApplicationController
   def update
     respond_to do |format|
       if @voter.update(voter_params)
-        format.html { redirect_to voter_url(@voter), notice: "Voter was successfully updated." }
+        format.html { redirect_to voter_url(@voter), notice: "Votador actualizado." }
         format.json { render :show, status: :ok, location: @voter }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -66,6 +65,6 @@ class VotersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def voter_params
-      params.fetch(:voter, {})
+      params.require(:voter).permit(:name, :last_name_f, :last_name_m, :date_born, :domicilio, :clave_elector, :estado, :municipio, :seccion, :localidad, :user_id, :campaign_id)
     end
 end

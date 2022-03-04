@@ -5,23 +5,32 @@ class UserController < ApplicationController
 
     def create
         @user = User.new(user_params)
-        if @user.rol == 'lider' && (current_user.rol == 'administrador' || current_user.rol == 'superusuraio')
+        if @user.rol == 'lider' && (current_user.rol == 'administrador' || current_user.rol == 'superusuario')
             respond_to do |format|
                 if @user.save
                     @user_campaing = CampaingsUser.new(user_id: @user.id, campaign_id: params['campaign'], rol: @user.rol) 
                     if @user_campaing.save
                         format.html { redirect_to lider_index_path, notice: 'Lider Creado' }
-                        format.json { render :show, status: :created, location: @product }
+                        format.json { render :show, status: :created, location: @user }
                     else
                         format.html { render lider_index_path }
-                        format.json { render json: @product.errors, status: :unprocessable_entity }
+                        format.json { render json: @user.errors, status: :unprocessable_entity }
                     end
                 else
                     format.html { render lider_index_path }
-                    format.json { render json: @product.errors, status: :unprocessable_entity }
+                    format.json { render json: @user.errors, status: :unprocessable_entity }
                 end
             end
-
+        elsif current_user.rol == 'superusuario'
+            respond_to do |format|
+                if @user.save
+                    format.html { redirect_to admin_index_path, notice: 'Administrador Creado' }
+                    format.json { render :show, status: :created, location: @user }
+                else
+                    format.html { render lider_index_path }
+                    format.json { render json: @user.errors, status: :unprocessable_entity }        
+                end
+            end
         end
     
     end

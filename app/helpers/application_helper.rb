@@ -3,9 +3,10 @@ module ApplicationHelper
         campaing           = "<li class='nav-item'><a class='nav-link' href='/campaigns'>Campaña</a></li>"
         lider           = "<li class='nav-item'><a class='nav-link' href='/lider/index'>Liders</a></li>"
         votante           = "<li class='nav-item'><a class='nav-link' href='/voters'>Votante</a></li>"
+        administrador           = "<li class='nav-item'><a class='nav-link' href='/admin/index'>Administradores</a></li>"
 
         enlaces =  {
-            'superusuraio': [campaing, lider, votante],
+            'superusuario': [campaing, lider, administrador, votante],
             'administrador':  [campaing, lider, votante],
             'lider':  [votante],
         }

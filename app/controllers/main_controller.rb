@@ -1,7 +1,10 @@
 class MainController < ApplicationController
   before_action :authenticate_user!
   def home
-    redirect_to campaigns_path
-
+    if current_user.rol != "lider"
+      redirect_to campaigns_path  
+    elsif current_user.rol == "lider"
+      redirect_to "/campaigns/#{current_user.campaign[0].id}"  
+    end
   end
 end

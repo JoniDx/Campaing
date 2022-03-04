@@ -1,4 +1,4 @@
 class Voter < ApplicationRecord
-    belongs_to :campaing
+    belongs_to :campaign
 
 end

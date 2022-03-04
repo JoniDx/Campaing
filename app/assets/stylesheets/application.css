@@ -14,6 +14,8 @@
  *= require_self
  */
 
+@import 'easy-autocomplete/dist/easy-autocomplete';
+@import 'easy-autocomplete/dist/easy-autocomplete.themes';
 
 body{background-color: #F8F8FF !important;}
 
@@ -37,7 +39,9 @@ body{background-color: #F8F8FF !important;}
     bottom: 0;
     right: 0;
 }
-
+.easy-autocomplete{
+    width: 100% !important;
+}
 
 @media (max-width: 600px) {
     .row-grid{

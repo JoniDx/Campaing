@@ -6,6 +6,8 @@ class CampaignsController < ApplicationController
   def index
     if current_user.rol == "superusuario"
       @campaigns = Campaign.all
+                           .ransack(name_cont: params[:q])
+                           .result(distinct: true)
                            .order(created_at: :desc)                       
                            .paginate(page: params[:page], per_page: 6)
 

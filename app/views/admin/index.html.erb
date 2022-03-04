@@ -3,13 +3,14 @@
 
 
 <div class="container">
-<%= link_to 'Agregar lider', lider_create_path, class:"btn btn-block btn-outline-primary mb-5" %>
 
-<%= form_with url: '/lider/index', local: true, method: :get  do |form| %>
+<%= link_to 'Agregar administrador de campaña',  admin_create_path , class:"btn btn-block btn-outline-primary mb-5" %>
+
+<%= form_with url: '/admin/index', local: true, method: :get  do |form| %>
     <div class="input-group mb-3">
         <div class="input-group">
             <input placeholder="Buscar" class="form-control buscador" type="text" name="q" id="q" value="<%=params[:q]%>">
-            <a class="btn bg-transparent" href="/lider/index"  style="margin-left: -40px; z-index: 100;">
+            <a class="btn bg-transparent" href="/admin/index"  style="margin-left: -40px; z-index: 100;">
               <i class="fa fa-times"></i>
             </a>
         </div>
@@ -23,18 +24,16 @@
         <thead>
           <tr>
               <th scope="col">Correo</th>
-              <th scope="col">Campaña</th>
               <th scope="col">Editar</th>
           </tr>
         </thead>
         <tbody>
-          <% @lideres.each do |lider| %>
+          <% @admins.each do |admin| %>
 
           <tr>
-              <th scope="row"><%= lider.email %></th>
-              <th scope="row"><%=  lider.campaign[0].name %></th>
+              <th scope="row"><%= admin.email %></th>
               <th scope="row">
-                <%= link_to "Editar", "/lider/edit/#{lider.id}" %>
+                <%= link_to "Editar", "/admin/edit/#{admin.id}" %>
               </th>
           </tr>
           <% end %>
@@ -47,12 +46,12 @@
 <script>
   var options = {
     url: () =>{
-      return "/lider/index.json?q="+$("#q").val()
+      return "/admin/index.json?q="+$("#q").val()
     },
     getValue: "email",
     list:{
       onChooseEvent: function(){
-        location.href ="/lider/index?q="+$("#q").val();
+        location.href ="/admin/index?q="+$("#q").val();
       }
     },
     size: '720px'

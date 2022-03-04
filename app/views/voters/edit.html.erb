@@ -1,8 +1,12 @@
 <%= nav_dashboard current_user.rol %>
 
-<h1>Editing Voter</h1>
+<div class="container">
+    <div class="grid-form_titles">
+        <h1>Editar votante</h1>
+        <div>
+           <%= link_to 'Mostrar', @voter %> | <%= link_to 'Regresar', voters_path %>
+        </div>
+    </div>
+    <%= render 'form', voter: @voter %>
+</div>
 
-<%= render 'form', voter: @voter %>
-
-<%= link_to 'Show', @voter %> |
-<%= link_to 'Back', voters_path %>

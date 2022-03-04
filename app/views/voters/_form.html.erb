@@ -1,17 +1,97 @@
-<%= form_with(model: voter) do |form| %>
-  <% if voter.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(voter.errors.count, "error") %> prohibited this voter from being saved:</h2>
+    
 
-      <ul>
-        <% voter.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+<div class="card" style="margin:5rem 0;">
+  <div class="card-body">    
+    <%= form_with(model: voter) do |form| %>
+      <% if voter.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(voter.errors.count, "error") %> prohibited this voter from being saved:</h2>
 
-  <div class="actions">
-    <%= form.submit %>
+          <ul>
+            <% voter.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+
+
+      <div class="field form-group">
+        <%= form.label "Nombre" %>
+        <%= form.text_field :name, class: "form-control"%>
+      </div>
+      <div class="field form-group">
+        <%= form.label "Fecha de nacimiento" %>
+        <% if @voter%>    
+        <input id="voter_date_born" name="voter[date_born]" type="date" class="form-control" value="<%= @voter.date_born%>">
+        <% else %>    
+        <input id="voter_date_born" name="voter[date_born]" type="date" class="form-control" value="">
+        <% end %>  
+      </div>
+
+      <div class="field form-group">
+        <%= form.label "Apellido paterno" %>
+        <%= form.text_field :last_name_f, class: "form-control"%>
+      </div>
+
+      <div class="field form-group">
+        <%= form.label "Apellido materno" %>
+        <%= form.text_field :last_name_m, class: "form-control"%>
+      </div>
+
+      <div class="field form-group">
+        <%= form.label :domicilio %>
+        <%= form.text_field :domicilio, class: "form-control"%>
+      </div>
+
+      <div class="field form-group">
+        <%= form.label "Clave de elector" %>
+        <%= form.text_field :clave_elector, class: "form-control"%>
+      </div>
+
+      <div class="field form-group">
+        <%= form.label :estado %>
+        <%= form.text_field :estado, class: "form-control"%>
+      </div>
+
+      <div class="field form-group">
+        <%= form.label :municipio %>
+        <%= form.text_field :municipio, class: "form-control"%>
+      </div>
+
+      <div class="field form-group">
+        <%= form.label "Sección" %>
+        <%= form.text_field :seccion, class: "form-control"%>
+      </div>  
+
+      <div class="field form-group">
+        <%= form.label :localidad %>
+        <%= form.text_field :localidad, class: "form-control"%>
+      </div>                           
+
+      <div class="field form-group d-none">
+        <%= form.label :user_id %>
+        <% if @voter%>    
+          <%= form.number_field :campaign_id, value: @voter.user_id%>
+        <% else %>    
+          <%= form.number_field :user_id, value: current_user.id%>
+        <% end %>    
+      </div>
+
+      <div class="field form-group d-none">
+        <%= form.label :campaign_id %>  
+        <% if @voter%>    
+          <%= form.number_field :campaign_id, value: @voter.campaign_id%>
+        <% else %>    
+          <%= form.number_field :campaign_id, value: current_user.campaign[0].id%>
+        <% end %>      
+      </div>
+
+      <div class="actions">
+        <%= form.submit 'Aceptar', :class => 'btn btn-block btn-outline-primary' %>
+      </div>
+    <% end %>
   </div>
-<% end %>
+</div>
+

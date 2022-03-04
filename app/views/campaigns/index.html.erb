@@ -3,6 +3,16 @@
 
 <div class="container">
   <%= link_to 'Agregar campaña', new_campaign_path, class:"btn btn-block btn-outline-primary mb-5" %>
+  <%= form_with url: '/campaigns', local: true, method: :get  do |form| %>
+      <div class="input-group mb-3">
+          <div class="input-group">
+              <input placeholder="Buscar" class="form-control buscador" type="text" name="q" id="q" value="<%=params[:q]%>">
+              <a class="btn bg-transparent" href="/campaigns"  style="margin-left: -40px; z-index: 100;">
+                <i class="fa fa-times"></i>
+              </a>
+          </div>
+      </div>
+  <%end%>
 
   <div class="row-grid">
       <% @campaigns.each do |campaign| %>
@@ -25,3 +35,20 @@
   <br>
 
 </div>
+
+<script>
+  var options = {
+    url: () =>{
+      return "/campaigns.json?q="+$("#q").val()
+    },
+    getValue: "name",
+    list:{
+      onChooseEvent: function(){
+        location.href ="/campaigns?q="+$("#q").val();
+      }
+    },
+    size: '720px'
+  };
+
+  $("#q").easyAutocomplete(options);
+</script>
