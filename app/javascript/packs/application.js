@@ -10,8 +10,6 @@ import Rails from "@rails/ujs"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 
-import 'easy-autocomplete/dist/jquery.easy-autocomplete'
-
 
 Rails.start()
 //Turbolinks.start()
