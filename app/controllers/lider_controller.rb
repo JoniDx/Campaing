@@ -4,15 +4,28 @@ class LiderController < ApplicationController
 
     def index
         if current_user.rol = 'superusuario'            
-            @lideres = User.where(rol:'lider')
+            @lideres_email = User.where(rol:'lider')
                         .ransack(email_cont: params[:q])
                         .result(distinct: true)
                         .order(created_at: :desc)                       
                         .paginate(page: params[:page], per_page: 6)
 
+            @lideres_name = User.where(rol:'lider')
+                        .ransack(name_cont: params[:q])
+                        .result(distinct: true)
+                        .order(created_at: :desc)                       
+                        .paginate(page: params[:page], per_page: 6)                        
+
         elsif current_user.rol = 'administrador'     
-            @lideres = User.where(rol:'lider', create_by:current_user.id)
+            @lideres_email = User.where(rol:'lider', create_by:current_user.id)
                             .ransack(email_cont: params[:q])
+                            .result(distinct: true)
+                            .ransack(name_cont: params[:q])
+                            .order(created_at: :desc)                       
+                            .paginate(page: params[:page], per_page: 6)
+
+            @lideres_name = User.where(rol:'lider', create_by:current_user.id)
+                            .ransack(name_cont: params[:q])
                             .result(distinct: true)
                             .ransack(name_cont: params[:q])
                             .order(created_at: :desc)                       

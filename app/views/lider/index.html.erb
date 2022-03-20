@@ -5,10 +5,18 @@
 <div class="container">
 <%= link_to 'Agregar lider', lider_create_path, class:"btn btn-block btn-outline-primary mb-5" %>
 
-<%= form_with url: '/lider/index', local: true, method: :get  do |form| %>
+
+<select name="type_search" class="form-control mb-2" id="type_search">
+  <option style="display:none">Buscador</option>
+  <option value="name">Nombre</option>
+  <option value="email">Correo</option>
+</select>
+
+<%= form_with url: '/lider/index', id:"search_form", class:"d-none", local: true, method: :get  do |form| %>
     <div class="input-group mb-3">
         <div class="input-group">
             <input placeholder="Buscar" class="form-control buscador" type="text" name="q" id="q" value="<%=params[:q]%>">
+            <input class="d-none" type="text" name="c" id="c" value="name">
             <a class="btn bg-transparent" href="/lider/index"  style="margin-left: -40px; z-index: 100;">
               <i class="fa fa-times"></i>
             </a>
@@ -22,20 +30,47 @@
       <table class="table">
         <thead>
           <tr>
+              <th scope="col">Nombre</th>
               <th scope="col">Correo</th>
               <th scope="col">Campaña</th>
               <th scope="col">Editar</th>
+              <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
-          <% @lideres.each do |lider| %>
+
+          <% 
+            if params[:c]
+              case params[:c]
+              when "name"
+                lideres = @lideres_name
+              when "email"                      
+                lideres = @lideres_email
+              end                                
+            else
+              lideres = @lideres_name
+            end
+          %>
+
+          <% lideres.each do |lider| %>
 
           <tr>
-              <th scope="row"><%= lider.email %></th>
-              <th scope="row"><%=  lider.campaign[0].name %></th>
-              <th scope="row">
-                <%= link_to "Editar", "/lider/edit/#{lider.id}" %>
-              </th>
+              <th scope="row" style="line-break: anywhere;"><%= lider.name %></th>
+              <th scope="row" style="line-break: anywhere;"><%= lider.email %></th>
+              <th scope="row" style="line-break: anywhere;"><%=  lider.campaign.first.name %></th>
+ 
+              <% if lider.is_active %>
+                <th scope="row" style="line-break: anywhere;">
+                  <a href="/lider/<%= lider.id%>/edit" ><i class="fas fa-edit"></i></a>
+                  <a rel="nofollow" data-method="put" href="/user/<%= lider.id %>/destroy" data-confirm="¿Seguro de querer desabilitar?" class="text-danger"><i class="fas fa-trash"></i></a>
+                </th>
+              <%else%>
+                <th scope="row" style="line-break: anywhere;">
+                  <a href="/lider/<%= lider.id%>/edit" ><i class="fas fa-edit"></i></a>
+                  <a rel="nofollow" data-method="put" href="/user/<%= lider.id %>/restore" data-confirm="¿Seguro de querer restaurar?" class="text-success"><i class="fas fa-trash-restore"></i></a>
+                </th>
+              <% end %>
+
           </tr>
           <% end %>
         </tbody>
@@ -45,18 +80,31 @@
 </div>          
 
 <script>
-  var options = {
-    url: () =>{
-      return "/lider/index.json?q="+$("#q").val()
-    },
-    getValue: "email",
-    list:{
-      onChooseEvent: function(){
-        location.href ="/lider/index?q="+$("#q").val();
-      }
-    },
-    size: '720px'
-  };
 
-  $("#q").easyAutocomplete(options);
+  $("#type_search").change(function(){
+    $("#search_form").removeClass("d-none");
+    let search_val = $(this).val();
+    if(search_val == "name"){
+      $("#c").val(search_val)
+    }
+    else if(search_val == "email"){
+      $("#c").val(search_val)
+    }
+
+    var options = {
+        url: () =>{
+          return "/lider/index.json?q="+$("#q").val()
+        },
+        getValue: search_val,
+        list:{
+          onChooseEvent: function(){
+            location.href ="/lider/index?q="+$("#q").val()+"&c="+$("#c").val();
+          }
+        },
+        size: '720px'
+      };    
+      $("#q").easyAutocomplete(options);
+  });
+
+
 </script>

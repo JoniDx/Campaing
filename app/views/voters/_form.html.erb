@@ -15,19 +15,9 @@
         </div>
       <% end %>
 
-
-
       <div class="field form-group">
         <%= form.label "Nombre" %>
         <%= form.text_field :name, class: "form-control"%>
-      </div>
-      <div class="field form-group">
-        <%= form.label "Fecha de nacimiento" %>
-        <% if @voter%>    
-        <input id="voter_date_born" name="voter[date_born]" type="date" class="form-control" value="<%= @voter.date_born%>">
-        <% else %>    
-        <input id="voter_date_born" name="voter[date_born]" type="date" class="form-control" value="">
-        <% end %>  
       </div>
 
       <div class="field form-group">
@@ -38,6 +28,15 @@
       <div class="field form-group">
         <%= form.label "Apellido materno" %>
         <%= form.text_field :last_name_m, class: "form-control"%>
+      </div>
+
+      <div class="field form-group">
+        <%= form.label "Fecha de nacimiento" %>
+        <% if @voter%>    
+        <input id="voter_date_born" name="voter[date_born]" type="date" class="form-control" value="<%= @voter.date_born%>">
+        <% else %>    
+        <input id="voter_date_born" name="voter[date_born]" type="date" class="form-control" value="">
+        <% end %>  
       </div>
 
       <div class="field form-group">
@@ -72,7 +71,7 @@
 
       <div class="field form-group d-none">
         <%= form.label :user_id %>
-        <% if @voter%>    
+        <% if @edit%>    
           <%= form.number_field :campaign_id, value: @voter.user_id%>
         <% else %>    
           <%= form.number_field :user_id, value: current_user.id%>
@@ -81,10 +80,10 @@
 
       <div class="field form-group d-none">
         <%= form.label :campaign_id %>  
-        <% if @voter%>    
+        <% if @edit%>    
           <%= form.number_field :campaign_id, value: @voter.campaign_id%>
         <% else %>    
-          <%= form.number_field :campaign_id, value: current_user.campaign[0].id%>
+          <%= form.number_field :campaign_id, value: current_user.campaign.first.id%>
         <% end %>      
       </div>
 

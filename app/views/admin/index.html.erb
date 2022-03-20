@@ -4,12 +4,22 @@
 
 <div class="container">
 
-<%= link_to 'Agregar administrador de campaña',  admin_create_path , class:"btn btn-block btn-outline-primary mb-5" %>
+<%= link_to 'Agregar administrador',  admin_create_path , class:"btn btn-block btn-outline-primary mb-5" %>
 
-<%= form_with url: '/admin/index', local: true, method: :get  do |form| %>
+
+
+<select name="type_search" class="form-control mb-2" id="type_search">
+  <option style="display:none">Buscador</option>
+  <option value="name">Nombre</option>
+  <option value="email">Correo</option>
+</select>
+
+<%= form_with url: '/admin/index', id:"search_form", class:"d-none", local: true, method: :get  do |form| %>
     <div class="input-group mb-3">
         <div class="input-group">
             <input placeholder="Buscar" class="form-control buscador" type="text" name="q" id="q" value="<%=params[:q]%>">
+            <input class="d-none" type="text" name="c" id="c" value="name">
+
             <a class="btn bg-transparent" href="/admin/index"  style="margin-left: -40px; z-index: 100;">
               <i class="fa fa-times"></i>
             </a>
@@ -23,20 +33,47 @@
       <table class="table">
         <thead>
           <tr>
+              <th scope="col">Nombre</th>
               <th scope="col">Correo</th>
               <th scope="col">Editar</th>
+              <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
-          <% @admins.each do |admin| %>
 
-          <tr>
+          <% 
+            if params[:c]
+              case params[:c]
+              when "name"
+                admins = @admins_name
+              when "email"                      
+                admins = @admins_email
+              end                                
+            else
+              admins = @admins_name
+            end
+          %>
+          <% admins.each do |admin| %>
+          <tr class="admin_name">
+              <th scope="row"><%= admin.name %></th>
               <th scope="row"><%= admin.email %></th>
               <th scope="row">
                 <%= link_to "Editar", "/admin/edit/#{admin.id}" %>
               </th>
+
+              <% if admin.is_active %>
+                <th scope="row">
+                  <a rel="nofollow" data-method="put" href="/user/<%= admin.id %>/destroy" data-confirm="¿Seguro de querer desabilitar?" class="text-danger"><i class="fas fa-trash"></i></a>
+                </th>
+              <%else%>
+                <th scope="row">
+                  <a rel="nofollow" data-method="put" href="/user/<%= admin.id %>/restore" data-confirm="¿Seguro de querer restaurar?" class="text-success"><i class="fas fa-trash-restore"></i></a>
+                </th>
+              <% end %>
+                            
           </tr>
           <% end %>
+      
         </tbody>
       </table>
     </div>          
@@ -44,18 +81,35 @@
 </div>          
 
 <script>
-  var options = {
-    url: () =>{
-      return "/admin/index.json?q="+$("#q").val()
-    },
-    getValue: "email",
-    list:{
-      onChooseEvent: function(){
-        location.href ="/admin/index?q="+$("#q").val();
-      }
-    },
-    size: '720px'
-  };
+/*
+  var admins_name = <%= raw @admins_name.to_json%>;
+  var admins_email = <%= raw @admins_email.to_json%>;
+*/
+  $("#type_search").change(function(){
+    $("#search_form").removeClass("d-none");
+    let search_val = $(this).val();
+    if(search_val == "name"){
+      $("#c").val(search_val)
+    }
+    else if(search_val == "email"){
+      $("#c").val(search_val)
+    }
 
-  $("#q").easyAutocomplete(options);
+    var options = {
+        url: () =>{
+          return "/admin/index.json?q="+$("#q").val()
+        },
+        getValue: search_val,
+        list:{
+          onChooseEvent: function(){
+            location.href ="/admin/index?q="+$("#q").val()+"&c="+$("#c").val();
+          }
+        },
+        size: '720px'
+      };    
+      $("#q").easyAutocomplete(options);
+  });
+
+ 
+
 </script>

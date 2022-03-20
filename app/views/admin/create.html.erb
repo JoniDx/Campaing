@@ -16,6 +16,11 @@
                         <%= f.text_field :create_by, value: current_user.id, class: 'form-control' %>
                     </div>
                 </div>
+                
+                <div class="form-group">
+                    <%= f.label :name, 'Nombre' %>
+                    <%= f.text_field :name, class: 'form-control' %>
+                </div>
 
                 <div class="form-group">
                     <%= f.label :email, 'Correo electrónico' %>
@@ -28,6 +33,14 @@
                     <em>(Mínimo <%= @minimum_password_length %> caracteres)</em>
                     <% end %>
                     <%= f.password_field :password, autocomplete: "new-password", class: 'form-control' %>
+                </div>
+
+                <div class="form-group">
+                    <select class="form-control mb-2" name="membership" id="membership">
+                        <option style="display:none">Selecciona el plaso</option>
+                        <option value="month">1 mes</option>
+                        <option value="year">1 año</option>
+                    </select>
                 </div>
 
                 <div class="actions">

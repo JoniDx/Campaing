@@ -4,11 +4,17 @@ class AdminController < ApplicationController
 
     def index
         if current_user.rol = 'superusuario'            
-            @admins = User.where(rol:'administrador')
-                        .ransack(email_cont: params[:q])
-                        .result(distinct: true)
-                        .order(created_at: :desc)                       
-                        .paginate(page: params[:page], per_page: 6)
+            @admins_email = User.where(rol:'administrador')
+                                .ransack(email_cont: params[:q])
+                                .result(distinct: true)
+                                .order(created_at: :desc)                       
+                                .paginate(page: params[:page], per_page: 6)
+
+            @admins_name = User.where(rol:'administrador')
+                                .ransack(name_cont: params[:q])
+                                .result(distinct: true)
+                                .order(created_at: :desc)                       
+                                .paginate(page: params[:page], per_page: 6)                                
         end
     end
 

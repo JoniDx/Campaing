@@ -4,12 +4,11 @@
 <div class="container">
     <div class="card">
         <div class="card-body">
-            <%= form_with(model: User, id: 'formUser', url: "/user/#{params[:id]}") do |f| %>
-      
+            <%=  form_with(model: User, id: 'formUser', url: "/user/#{params[:id]}") do |f| %>
 
                 <div class="form-group">
-                    <%= f.label :campaign, 'Campaña' %>
-                    <%= select_tag :campaign,  options_from_collection_for_select(Campaign.where(user_id: current_user.id), :id, :name, @user.campaign[0].id ), class: 'form-control' %>
+                    <%= f.label :name, 'Nombre' %>
+                    <%= f.text_field :name, class: 'form-control', value: @user.name %>
                 </div>
 
                 <div class="form-group">

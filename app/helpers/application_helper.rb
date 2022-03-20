@@ -3,12 +3,12 @@ module ApplicationHelper
         campaing           = "<li class='nav-item'><a class='nav-link' href='/campaigns'>Campaña</a></li>"
         lider           = "<li class='nav-item'><a class='nav-link' href='/lider/index'>Liders</a></li>"
         votante           = "<li class='nav-item'><a class='nav-link' href='/voters'>Votante</a></li>"
-        administrador           = "<li class='nav-item'><a class='nav-link' href='/admin/index'>Administradores</a></li>"
+        administrador           = "<li class='nav-item'><a class='nav-link' href='/admin/index'>Administrador</a></li>"
 
         enlaces =  {
-            'superusuario': [campaing, lider, administrador, votante],
-            'administrador':  [campaing, lider, votante],
-            'lider':  [votante],
+            'superusuario': [administrador,campaing, lider],
+            'administrador':  [campaing, lider],
+            'lider':  [],
         }
 
         nav = "<nav class='navbar navbar-expand-lg navbar-light bg-light'>
@@ -19,7 +19,7 @@ module ApplicationHelper
                 <div class='collapse navbar-collapse' id='navbarNav'>
                     <ul class='navbar-nav mr-auto my-2 my-lg-0 navbar-nav-scroll'>"
                     enlaces[:"#{rol}"].each { |enlace| nav +=  enlace }   
-        nav += "</ul><div class=''> #{ button_to 'Exit', destroy_user_session_path, method: :delete, class: "btn btn-outline-danger my-2 my-sm-0" }   </div></div></nav>"
+        nav += "</ul><div class=''> #{ button_to 'Exit', destroy_user_session_path, method: :delete, id:"exit", class: "btn btn-outline-danger my-2 my-sm-0" }   </div></div></nav>"
         nav.html_safe
     end
 

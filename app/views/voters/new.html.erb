@@ -5,9 +5,11 @@
     <div class="grid-form_titles">
         <h1>Registrar votante</h1>
         <div>
-           <%= link_to 'Regresar', voters_path %>
+            <button   class="btn btn-primary" onclick="history.back()">Regresar</button>
         </div>
     </div>
+    <p id="notice" class=""><%= notice %></p>
+
     <%= render 'form', voter: @voter %>
 </div>
 

@@ -2,26 +2,111 @@
 
 <p id="notice"><%= notice %></p>
 
-<h1>Voters</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
 
-  <tbody>
-    <% @voters.each do |voter| %>
-      <tr>
-        <td><%= link_to 'Show', voter %></td>
-        <td><%= link_to 'Edit', edit_voter_path(voter) %></td>
-        <td><%= link_to 'Destroy', voter, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="container">
+<%= link_to 'Agregar votante', new_voter_path, class:"btn btn-block btn-outline-primary mb-5" %>
 
+<select name="type_search" class="form-control mb-2" id="type_search">
+  <option style="display:none">Buscador</option>
+  <option value="name">Nombre</option>
+  <option value="seccion">Sección</option>
+  <option value="clave_elector">Clave de elector</option>
+</select>
+
+<%= form_with url: "/voters", id:"search_form", class:"d-none", local: true, method: :get  do |form| %>
+    <div class="input-group mb-3">
+        <div class="input-group">
+            <input placeholder="Buscar" class="form-control buscador" type="text" name="q" id="q" value="<%=params[:q]%>">
+            <input class="d-none" type="text" name="s" id="s" value="name">
+            <a class="btn bg-transparent" href="/voters?c=<%= params[:c]%>"  style="margin-left: -40px; z-index: 100;">
+              <i class="fa fa-times"></i>
+            </a>
+        </div>
+    </div>
+<%end%>
+
+
+  <div class="card">
+    <div class="card-body">
+      <table class="table">
+        <thead>
+          <tr>
+              <th scope="col">Nombre</th>
+              <th scope="col">Sección</th>
+              <th scope="col">C. elector</th>
+              <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <% 
+            if params[:s]
+              case params[:s]
+              when "name"
+                voters = @voters_name
+              when "seccion"                      
+                voters = @voters_seccion
+              when "clave_elector"
+                voters = @voters_clave_elector
+              end                                
+            else
+              voters = @voters_name
+            end
+          %>
+
+          <% voters.each do |voter| %>
+
+          <tr>
+              <th scope="row" style="line-break: anywhere;"><%= voter.name %>&nbsp;<%= voter.last_name_f %>&nbsp;<%= voter.last_name_m %></th>
+              <th scope="row" style="line-break: anywhere;"><%= voter.seccion %></th>
+              <th scope="row" style="line-break: anywhere;"><%= voter.clave_elector %></th>
+
+              
+              <th scope="row" style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: .5rem;">
+                <a href="/voters/<%= voter.id%>/edit" ><i class="fas fa-edit"></i></a>
+                <a rel="nofollow" data-method="delete" href="/voters/<%= voter.id %>" data-confirm="¿Seguro de querer eliminar el votante?" class="text-danger"><i class="fas fa-trash"></i></a>
+              </th>
+
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>          
+  </div>          
+</div>          
+
+<script>
+
+  $("#type_search").change(function(){
+    $("#search_form").removeClass("d-none");
+    let search_val = $(this).val();
+    if(search_val == "name"){
+      $("#s").val(search_val)
+    }
+    else if(search_val == "seccion"){
+      $("#s").val(search_val)
+    }
+    else if(search_val == "clave_elector"){
+      $("#s").val(search_val)
+    }
+
+    var options = {
+        url: () =>{
+          return "/voters.json?q="+$("#q").val()+"&c=<%= params[:c]%>"+"&s="+$("#s").val();
+        },
+        getValue: search_val,
+        list:{
+          onChooseEvent: function(){
+            location.href = "/voters?q="+$("#q").val()+"&s="+$("#s").val()+"&c=<%= params[:c]%>";
+          }
+        },
+        size: '720px'
+      };    
+      $("#q").easyAutocomplete(options);
+  });
+
+
+</script>
 <br>
 
-<%= link_to 'New Voter', new_voter_path %>

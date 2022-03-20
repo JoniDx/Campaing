@@ -40,7 +40,65 @@ body{background-color: #F8F8FF !important;}
     width: 100% !important;
 }
 
+.grid-campaing{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.grid-campaing-containg span{
+    font-size: 3rem;
+}
+
+.grid-campaing-containg p{
+    font-size: 2rem;
+}
+
+.grid-campaing-containg-img{
+    display: grid;
+    padding: 2rem;
+}
+
+.grid-campaing-containg-img img{
+    justify-self: center;
+    align-self: center;
+    width: 100%;
+    height: 100%;
+}
+
+.grid-campaing-containg-info{
+    display: grid;
+    padding: 2rem;
+}
+
+.grid-campaing-containg{
+
+}
+
+.grid-campaing-people{
+
+}
+
+
+.grid-campaing-liders{
+    font-size: 1.5rem;
+}
+
+.grid-campaing-voters{
+
+}
+
+.campaing-voter{
+    font-size: 1.5rem;
+    display: grid;
+    grid-template-columns: 2fr .5fr;
+}
+
+.campaing-btn{
+    padding: 0 2rem;
+}
 @media (max-width: 600px) {
+    .grid-campaing{
+        grid-template-columns: 1fr;
+    }
     .row-grid{
         grid-template-columns: 1fr;
     }

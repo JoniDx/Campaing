@@ -79,6 +79,6 @@ class CampaignsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def campaign_params
-      params.require(:campaign).permit(:name, :user_id, :description)
+      params.require(:campaign).permit(:name, :user_id, :description, :image)
     end
 end

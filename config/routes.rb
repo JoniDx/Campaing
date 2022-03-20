@@ -21,5 +21,7 @@ Rails.application.routes.draw do
 
   post 'user', to: 'user#create'
   post 'user/:id', to: 'user#update'
+  put 'user/:id/destroy', to: 'user#destroy'
+  put 'user/:id/restore', to: 'user#restore'
 
 end

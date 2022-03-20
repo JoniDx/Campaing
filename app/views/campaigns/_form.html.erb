@@ -29,9 +29,28 @@
         <%= form.number_field :user_id, value: current_user.id%>
       </div>
 
+      <div class="form-group">
+        <%= form.label :image, 'Elige una imagen.', class: 'btn btn-block btn-primary'%>
+        <%= form.file_field :image, class: 'd-none', onchange: 'preview_image(event)' %>
+          <img id="output_image", class="mx-auto d-block mt-3 mw-100"/>
+      </div>
+
       <div class="actions">
         <%= form.submit 'Aceptar', :class => 'btn btn-block btn-outline-primary' %>
       </div>
     <% end %>
   </div>
 </div>      
+
+<script>
+
+    // ver imagen
+    function preview_image(event) {
+        var reader = new FileReader();
+        reader.onload = function(){
+        var output = document.getElementById('output_image');
+        output.src = reader.result;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>

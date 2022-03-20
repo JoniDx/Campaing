@@ -2,10 +2,46 @@
 
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @campaign.name %>
-</p>
+<%# raise s %>
+<div class="grid-campaing">
+  <div class="grid-campaing-containg-img">
+    <img class="img-fluid img-thumbnail" src="<%=  url_for(@campaign.image) if @campaign.image.attached?  %>">
+  </div>
 
-<%= link_to 'Edit', edit_campaign_path(@campaign) %> |
-<%= link_to 'Back', campaigns_path %>
+  <div class="grid-campaing-containg-info">
+    <div class="card">
+      <div class="card-body">
+        <div class="grid-campaing-containg">
+          <span><%= @campaign.name %></span>
+          <p><%=  @campaign.description %></p>
+        </div>
+        
+        <div class="grid-campaing-people ">
+          <div class="grid-campaing-liders">
+            <span>Lideres:</span>
+            <span><%=  CampaingsUser.where(campaign_id: @campaign.id).count %></span>
+          </div>
+          <div class="grid-campaing-voters">
+            <% @campaign.voters.group(:seccion).order(:seccion).count.each do |seccion|%>
+              <div class="campaing-voter">
+                <div>
+                  <span>Seccion  <%= seccion[0]%>: </span>
+                  <span><%= seccion[1]%></span>
+                </div>
+                <% if current_user.rol == "administrador"%>
+                  <a class="" href="/voters?q=<%= seccion[0]%>&s=seccion&c=<%=  @campaign.id%>">Ver</a>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="campaing-btn">
+  <a class="btn btn-block btn-outline-primary mb-5" href="/voters?c=<%=  @campaign.id%>"> Ver votantes</a>
+</div>
+
